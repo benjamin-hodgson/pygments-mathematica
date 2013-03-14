@@ -4,7 +4,7 @@ import re
 
 class MathematicaLexer(RegexLexer):
     name = 'Mathematica'
-    alias = ['mathematica']
+    aliases = ['mathematica', 'Mathematica']
     filenames = ['*.m']
     flags = re.MULTILINE | re.DOTALL
     
