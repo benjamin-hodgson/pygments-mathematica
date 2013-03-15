@@ -17,6 +17,7 @@ class MathematicaLexer(RegexLexer):
             (r'[A-Z][A-Za-z0-9]*', Name.Builtin),  # builtins start with a capital letter
             (r'[a-z][A-Za-z0-9]*', Name),  # user-defined names start with lowercase
             (r'[\+\-]?[0-9]+\.?[0-9]*[eE]?[\+\-]?[0-9]*', Number.Float),
+            (r'[\+\-]?[0-9]+', Number.Integer),
             (r'[\+\-/*=^:<>@\?~]', Operator),
             (r'[\[\](){}]', Punctuation),  # various braces
             (r'[,;\.]', Punctuation),
