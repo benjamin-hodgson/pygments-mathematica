@@ -37,6 +37,22 @@ class TestComments(BaseMathematicaLexerTest):
                   (Comment, ' comment '),
                   (Comment, '*)'), (Whitespace, '\n')]
         self.run(code, wanted)
+    
+    def test_nested_comment(self):
+        code = """(* nested (* comment *) test *)"""
+        wanted = [(Comment, '(*'), (Comment, ' nested '),
+                  (Comment, '(*'), (Comment, ' comment '), (Comment, '*)'),
+                  (Comment, ' test '), (Comment, '*)'), (Whitespace, '\n')]
+        self.run(code, wanted)
+    
+    def test_multiline_comment(self):
+        code = """(* multiline
+(* and nested *)
+comment *)"""
+        wanted = [(Comment, '(*'), (Comment, ' multiline\n'),
+                  (Comment, '(*'), (Comment, ' and nested '), (Comment, '*)'),
+                  (Comment, '\ncomment '), (Comment, '*)'), (Whitespace, '\n')]
+        self.run(code, wanted)
 
 
 
