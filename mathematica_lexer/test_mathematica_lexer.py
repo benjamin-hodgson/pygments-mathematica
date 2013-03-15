@@ -55,6 +55,19 @@ comment *)"""
         self.run(code, wanted)
 
 
+class TestStrings(self):
+    def test_string(self):
+        code = """normal code "string""""
+        wanted = [(Text, 'normal'), (Whitespace, ' '),
+                  (Text, 'code'), (Whitespace, ' '),
+                  (String, '"string"'), (Whitespace, '\n')]
+        self.run(code, wanted)
+    
+    def test_multiline_string(self):
+        code = """"multiline
+string""""
+        wanted = [(String, '"multiline\nstring"')]
+        self.run(code, wanted)
 
 
 if __name__ == '__main__':
