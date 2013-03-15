@@ -26,6 +26,11 @@ class TestText(BaseMathematicaLexerTest):
                   (Text, 'normal'), (Whitespace, ' '),
                   (Text, 'text'), (Whitespace, '\n')]
         self.run(code, wanted)
+    
+    def test_builtins(self):
+        code = "BuiltinFunction"
+        wanted = [(Name.Builtin, 'BuiltinFunction'), (Whitespace, '\n')]
+        self.run(code, wanted)
 
 
 class TestComments(BaseMathematicaLexerTest):
