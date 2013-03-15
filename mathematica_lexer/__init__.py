@@ -17,7 +17,7 @@ class MathematicaLexer(RegexLexer):
             (r'[\+\-]?[0-9]+\.?[0-9]*[eE]?[\+\-]?[0-9]*', Number.Float),
             (r'[\+\-]?[0-9]+', Number.Integer),
             (r'[\+\-/*=^:<>@\?~]', Operator),
-            (r'[\[\](){}]', Punctuation),  # various braces
+            (r'[\[\]\(\){}]', Punctuation),  # various braces
             (r'[,;\.]', Punctuation),
             (r'_', Punctuation)
         ],
