@@ -6,12 +6,11 @@ class MathematicaLexer(RegexLexer):
     name = 'Mathematica'
     aliases = ['mathematica', 'Mathematica']
     filenames = ['*.m']
-    flags = re.MULTILINE | re.DOTALL
     
     tokens = {
         'root': [
             (r'\s+', Whitespace),
-            (r'\(\*.*?\*\)', Comment.Multiline),  # comments (* look like this *)
+            (r'\(\*', Comment, 'comment'),  # comments (* look like this *)
             (r'".*?"', String),
             #(r'(\[)\s*([a-z][A-Za-z0-9]*_)\s*(\])', bygroups(Text, Name.Variable, Text)),
             (r'[A-Z][A-Za-z0-9]*', Name.Builtin),  # builtins start with a capital letter
@@ -22,14 +21,21 @@ class MathematicaLexer(RegexLexer):
             (r'[\[\](){}]', Punctuation),  # various braces
             (r'[,;\.]', Punctuation),
             (r'_', Punctuation)
-            ]
-        }
+        ],
+        'comment': [
+            (r'[^\*\(\)]+', Comment),
+            (r'\(\*', Comment, '#push'),
+            (r'\*\)', Comment, '#pop'),
+            (r'[\(\)\*]', Comment)  # star or brackets on their own
+        ]
+    }
 
 if __name__ == '__main__':
     from pygments import highlight
     from pygments.formatters import LatexFormatter
     test_code = """
-         normal code; (* comment *)
+         normal code; (* a comment *)
+         (* comment (* (nested) *) *)
          BuiltInFunctionCall[argument, {list,argument,-10.01e+12}];
          functionDefinition[x_]
          functionDefinition[a_,b_] := a^2 + b^2;
