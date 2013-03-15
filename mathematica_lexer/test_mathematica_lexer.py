@@ -7,7 +7,7 @@ import string
 
 class BaseMathematicaLexerTest(object):
     def run(self, code, wanted):
-        assert_equal(wanted, list(self.lexer.get_tokens(code)))
+        assert_equal(wanted + [(Whitespace, '\n')], list(self.lexer.get_tokens(code)))
     
     def setUp(self):
         self.lexer = MathematicaLexer()
@@ -24,12 +24,12 @@ class TestText(BaseMathematicaLexerTest):
         code = """some normal text"""
         wanted = [(Text, 'some'), (Whitespace, ' '),
                   (Text, 'normal'), (Whitespace, ' '),
-                  (Text, 'text'), (Whitespace, '\n')]
+                  (Text, 'text')]
         self.run(code, wanted)
     
     def test_builtins(self):
         code = "BuiltinFunction"
-        wanted = [(Name.Builtin, 'BuiltinFunction'), (Whitespace, '\n')]
+        wanted = [(Name.Builtin, 'BuiltinFunction')]
         self.run(code, wanted)
 
 
@@ -40,14 +40,14 @@ class TestComments(BaseMathematicaLexerTest):
                   (Text, 'code'), (Whitespace, ' '),
                   (Comment, '(*'),
                   (Comment, ' comment '),
-                  (Comment, '*)'), (Whitespace, '\n')]
+                  (Comment, '*)')]
         self.run(code, wanted)
     
     def test_nested_comment(self):
         code = """(* nested (* comment *) test *)"""
         wanted = [(Comment, '(*'), (Comment, ' nested '),
                   (Comment, '(*'), (Comment, ' comment '), (Comment, '*)'),
-                  (Comment, ' test '), (Comment, '*)'), (Whitespace, '\n')]
+                  (Comment, ' test '), (Comment, '*)')]
         self.run(code, wanted)
     
     def test_multiline_comment(self):
@@ -56,7 +56,7 @@ class TestComments(BaseMathematicaLexerTest):
 comment *)"""
         wanted = [(Comment, '(*'), (Comment, ' multiline\n'),
                   (Comment, '(*'), (Comment, ' and nested '), (Comment, '*)'),
-                  (Comment, '\ncomment '), (Comment, '*)'), (Whitespace, '\n')]
+                  (Comment, '\ncomment '), (Comment, '*)')]
         self.run(code, wanted)
 
 
@@ -65,13 +65,13 @@ class TestStrings(BaseMathematicaLexerTest):
         code = '''normal code "string"'''
         wanted = [(Text, 'normal'), (Whitespace, ' '),
                   (Text, 'code'), (Whitespace, ' '),
-                  (String, '"string"'), (Whitespace, '\n')]
+                  (String, '"string"')]
         self.run(code, wanted)
     
     def test_multiline_string(self):
         code = '''"multiline
 string"'''
-        wanted = [(String, '"multiline\nstring"'), (Whitespace, '\n')]
+        wanted = [(String, '"multiline\nstring"')]
         self.run(code, wanted)
 
 
@@ -79,7 +79,7 @@ class TestNumbers(BaseMathematicaLexerTest):
     def test_integers(self):
         code = "123 -56"
         wanted = [(Number.Integer, '123'), (Whitespace, ' '),
-                  (Number.Integer, '-56'), (Whitespace, '\n')]
+                  (Number.Integer, '-56')]
         self.run(code, wanted)
     
     def test_floats(self):
@@ -89,24 +89,24 @@ class TestNumbers(BaseMathematicaLexerTest):
                   (Number.Float, '3.4'), (Whitespace, ' '),
                   (Number.Float, '-5.6'), (Whitespace, ' '),
                   (Number.Float, '7.8e9'), (Whitespace, ' '),
-                  (Number.Float, '-10.11E-12'), (Whitespace, '\n')]
+                  (Number.Float, '-10.11E-12')]
         self.run(code, wanted)
 
 
 class TestSymbols(BaseMathematicaLexerTest):
     def test_braces(self):
         code = "{}[]()"
-        wanted = [(Punctuation, c) for c in code] + [(Whitespace, '\n')]
+        wanted = [(Punctuation, c) for c in code]
         self.run(code, wanted)
     
     def test_punctuation(self):
         code = ',;'
-        wanted = [(Punctuation, c) for c in code] + [(Whitespace, '\n')]
+        wanted = [(Punctuation, c) for c in code]
         self.run(code, wanted)
     
     def test_operators(self):
         code = '+-*^/:=<>@~?'
-        wanted = [(Operator, c) for c in code] + [(Whitespace, '\n')]
+        wanted = [(Operator, c) for c in code]
         self.run(code, wanted)
 
 
