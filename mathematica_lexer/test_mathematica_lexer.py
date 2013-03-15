@@ -93,5 +93,22 @@ class TestNumbers(BaseMathematicaLexerTest):
         self.run(code, wanted)
 
 
+class TestSymbols(BaseMathematicaLexerTest):
+    def test_braces(self):
+        code = "{}[]()"
+        wanted = [(Punctuation, c) for c in code] + [(Whitespace, '\n')]
+        self.run(code, wanted)
+    
+    def test_punctuation(self):
+        code = ',;'
+        wanted = [(Punctuation, c) for c in code] + [(Whitespace, '\n')]
+        self.run(code, wanted)
+    
+    def test_operators(self):
+        code = '+-*^/:=<>@~?'
+        wanted = [(Operator, c) for c in code] + [(Whitespace, '\n')]
+        self.run(code, wanted)
+
+
 if __name__ == '__main__':
     nose.main()
