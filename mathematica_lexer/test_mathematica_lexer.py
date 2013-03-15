@@ -66,7 +66,7 @@ class TestStrings(BaseMathematicaLexerTest):
     def test_multiline_string(self):
         code = '''"multiline
 string"'''
-        wanted = [(String, '"multiline\nstring"')]
+        wanted = [(String, '"multiline\nstring"'), (Whitespace, '\n')]
         self.run(code, wanted)
 
 

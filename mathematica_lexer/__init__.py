@@ -6,6 +6,7 @@ class MathematicaLexer(RegexLexer):
     name = 'Mathematica'
     aliases = ['mathematica', 'Mathematica']
     filenames = ['*.m']
+    flags = re.DOTALL
     
     tokens = {
         'root': [
