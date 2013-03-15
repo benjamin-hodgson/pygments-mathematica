@@ -12,7 +12,6 @@ class MathematicaLexer(RegexLexer):
             (r'\s+', Whitespace),
             (r'\(\*', Comment, 'comment'),  # comments (* look like this *)
             (r'".*?"', String),
-            #(r'(\[)\s*([a-z][A-Za-z0-9]*_)\s*(\])', bygroups(Text, Name.Variable, Text)),
             (r'[A-Z][A-Za-z0-9]*', Name.Builtin),  # builtins start with a capital letter
             (r'[a-z][A-Za-z0-9]*', Name),  # user-defined names start with lowercase
             (r'[\+\-]?[0-9]+\.?[0-9]*[eE]?[\+\-]?[0-9]*', Number.Float),
@@ -37,8 +36,6 @@ if __name__ == '__main__':
          normal code; (* a comment *)
          (* comment (* (nested) *) *)
          BuiltInFunctionCall[argument, {list,argument,-10.01e+12}];
-         functionDefinition[x_]
-         functionDefinition[a_,b_] := a^2 + b^2;
          assignment = {var, 2, "string"};
          
          (* multiline comment
