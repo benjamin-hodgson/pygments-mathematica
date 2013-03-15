@@ -70,5 +70,23 @@ string"'''
         self.run(code, wanted)
 
 
+class TestNumbers(BaseMathematicaLexerTest):
+    def test_integers(self):
+        code = "123 -56"
+        wanted = [(Number.Integer, '123'), (Whitespace, ' '),
+                  (Number.Integer, '-56'), (Whitespace, '\n')]
+        self.run(code, wanted)
+    
+    def test_floats(self):
+        code = "1. -2. 3.4 -5.6 7.8e9 -10.11E-12"
+        wanted = [(Number.Float, '1.'), (Whitespace, ' '),
+                  (Number.Float, '-2.'), (Whitespace, ' '),
+                  (Number.Float, '3.4'), (Whitespace, ' '),
+                  (Number.Float, '-5.6'), (Whitespace, ' '),
+                  (Number.Float, '7.8e9'), (Whitespace, ' '),
+                  (Number.Float, '-10.11E-12'), (Whitespace, '\n')]
+        self.run(code, wanted)
+
+
 if __name__ == '__main__':
     nose.main()
