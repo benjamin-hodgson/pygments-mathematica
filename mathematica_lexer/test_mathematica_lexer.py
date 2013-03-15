@@ -5,10 +5,15 @@ from pygments.token import *
 import string
 
 
-class TestMathematicaLexer(object):
+class BaseMathematicaLexerTest(object):
+    def run(self, code, wanted):
+        assert_equal(wanted, list(self.lexer.get_tokens(code)))
+    
     def setUp(self):
         self.lexer = MathematicaLexer()
-    
+
+
+class TestText(BaseMathematicaLexerTest):
     def test_whitespace(self):
         for tokentype, text in self.lexer.get_tokens(string.whitespace):
             assert_equal(tokentype, Whitespace)
@@ -17,29 +22,23 @@ class TestMathematicaLexer(object):
     
     def test_text(self):
         code = """some normal text"""
-        wanted = interleave(zip([Text, Text, Text], code.split()), (Whitespace, ' '))
-        for wanted_tup, actual_tup in zip(wanted, self.lexer.get_tokens(code)):
-            assert_equal(wanted_tup, actual_tup)
-    
+        wanted = [(Text, 'some'), (Whitespace, ' '),
+                  (Text, 'normal'), (Whitespace, ' '),
+                  (Text, 'text'), (Whitespace, '\n')]
+        self.run(code, wanted)
+
+
+class TestComments(BaseMathematicaLexerTest):
     def test_comment(self):
         code = """normal code (* comment *)"""
-        wanted = [(Text, 'normal'),
-                  (Whitespace, ' '),
-                  (Text, 'code'),
-                  (Whitespace, ' '),
+        wanted = [(Text, 'normal'), (Whitespace, ' '),
+                  (Text, 'code'), (Whitespace, ' '),
                   (Comment, '(*'),
                   (Comment, ' comment '),
-                  (Comment, '*)')]
-        for wanted_tup, actual_tup in zip(wanted, self.lexer.get_tokens(code)):
-            assert_equal(wanted_tup, actual_tup)
+                  (Comment, '*)'), (Whitespace, '\n')]
+        self.run(code, wanted)
 
 
-def interleave(l, elem):
-    ret = []
-    for item in l:
-        ret.append(item)
-        ret.append(elem)
-    return ret[:-1]
 
 
 if __name__ == '__main__':
