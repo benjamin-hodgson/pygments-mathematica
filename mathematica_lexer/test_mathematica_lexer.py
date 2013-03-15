@@ -1,6 +1,6 @@
 import nose
 from nose.tools import *
-from . import MathematicaLexer
+from .mathematica_lexer import MathematicaLexer
 from pygments.token import *
 import string
 
