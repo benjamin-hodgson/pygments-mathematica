@@ -24,9 +24,9 @@ class TestWhitespace(BaseTest):
 class TestNames(BaseTest):    
     def test_text(self):
         code = """some normal text"""
-        wanted = [(Text, 'some'), (Whitespace, ' '),
-                  (Text, 'normal'), (Whitespace, ' '),
-                  (Text, 'text')]
+        wanted = [(Name, 'some'), (Whitespace, ' '),
+                  (Name, 'normal'), (Whitespace, ' '),
+                  (Name, 'text')]
         self.run(code, wanted)
     
     def test_builtins(self):
@@ -38,8 +38,8 @@ class TestNames(BaseTest):
 class TestComments(BaseTest):
     def test_comment(self):
         code = """normal code (* comment *)"""
-        wanted = [(Text, 'normal'), (Whitespace, ' '),
-                  (Text, 'code'), (Whitespace, ' '),
+        wanted = [(Name, 'normal'), (Whitespace, ' '),
+                  (Name, 'code'), (Whitespace, ' '),
                   (Comment, '(*'),
                   (Comment, ' comment '),
                   (Comment, '*)')]
@@ -65,8 +65,8 @@ comment *)"""
 class TestStrings(BaseTest):
     def test_string(self):
         code = '''normal code "string"'''
-        wanted = [(Text, 'normal'), (Whitespace, ' '),
-                  (Text, 'code'), (Whitespace, ' '),
+        wanted = [(Name, 'normal'), (Whitespace, ' '),
+                  (Name, 'code'), (Whitespace, ' '),
                   (String, '"string"')]
         self.run(code, wanted)
     
