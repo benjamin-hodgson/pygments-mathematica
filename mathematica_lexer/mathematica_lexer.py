@@ -12,6 +12,7 @@ class MathematicaLexer(RegexLexer):
             (r'\(\*', Comment, 'comment'),  # comments (* look like this *)
             (r'\s+', Whitespace),
             (r'(?s)".*?"', String),
+            (r'\\\[\w*?\]', Error),
             include('numbers'),
             include('symbols'),
             include('names')
