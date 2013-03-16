@@ -33,6 +33,11 @@ class TestNames(BaseTest):
         code = "BuiltinFunction"
         wanted = [(Name.Builtin, 'BuiltinFunction')]
         self.run(code, wanted)
+    
+    def test_escape(self):
+        code = "\\[Mu]"
+        wanted = [(Error, "\\[Mu]")]
+        self.run(code, wanted)
 
 
 class TestComments(BaseTest):
