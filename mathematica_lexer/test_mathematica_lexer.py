@@ -115,6 +115,18 @@ class TestSymbols(BaseTest):
         code = '+-*^/:=<>@~?'
         wanted = [(Operator, c) for c in code]
         self.run(code, wanted)
+    
+    def test_anonymous_function(self):
+        code1 = '#*2 &'
+        wanted1 = [(Name.Variable, '#'), (Operator, '*'), (Number.Integer, '2'),
+                   (Whitespace, ' '), (Punctuation, '&')]
+        self.run(code1, wanted1)
+        
+        code2 = '#1*2 + #2 &'
+        wanted2 = [(Name.Variable, '#1'), (Operator, '*'), (Number.Integer, '2'),
+                   (Whitespace, ' '), (Operator, '+'), (Whitespace, ' '),
+                   (Name.Variable, '#2'), (Whitespace, ' '), (Punctuation, '&')]
+        self.run(code2, wanted2)
 
 
 class TestLHS(BaseTest):
