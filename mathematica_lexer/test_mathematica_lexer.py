@@ -133,8 +133,10 @@ class TestLHS(BaseTest):
     def test_multiple_arguments(self):
         code = 'multipleArguments[x_, y_, z_] := x + y*z/2.0;'
         wanted = [(Name.Function, 'multipleArguments'), (Punctuation, '['),
-                  (Name.Variable, 'x'), (Punctuation, '_'), (Whitespace, ' '),
-                  (Name.Variable, 'y'), (Punctuation, '_'), (Whitespace, ' '),
+                  (Name.Variable, 'x'), (Punctuation, '_'), (Punctuation, ','),
+                  (Whitespace, ' '),
+                  (Name.Variable, 'y'), (Punctuation, '_'), (Punctuation, ','),
+                  (Whitespace, ' '),
                   (Name.Variable, 'z'), (Punctuation, '_'), (Punctuation, ']'),
                   (Whitespace, ' '), (Operator, ':='), (Whitespace, ' '),
                   (Name.Variable, 'x'), (Whitespace, ' '),
@@ -142,6 +144,22 @@ class TestLHS(BaseTest):
                   (Name.Variable, 'y'), (Operator, '*'),
                   (Name.Variable, 'z'), (Operator, '/'), (Number.Float, '2.0'),
                   (Punctuation, ';')]
+        self.run(code, wanted)
+    
+    def test_multiline_function(self):
+        code = """multilineFunction[x_] := BuiltinFunction[
+  {x, x^2, y}];
+endOfIndent"""
+        wanted = [(Name.Function, 'multilineFunction'), (Punctuation, '['),
+                  (Name.Variable, 'x'), (Punctuation, '_'), (Punctuation, ']'),
+                  (Whitespace, ' '), (Operator, ':='), (Whitespace, ' '),
+                  (Name.Builtin, 'BuiltinFunction'), (Punctuation, '['),
+                  (Whitespace, '\n'), (Whitespace, '  '),
+                  (Punctuation, '{'), (Name.Variable, 'x'), (Punctuation, ','),
+                  (Whitespace, ' '), (Name.Variable, 'x'), (Operator, '^'),
+                  (Number.Integer, '2'), (Punctuation, ','), (Whitespace, ' '),
+                  (Name, 'y'), (Punctuation, '}'), (Punctuation, ']'), (Punctuation, ';'),
+                  (Whitespace, '\n'), (Name, 'endOfIndent')]
         self.run(code, wanted)
 
 
