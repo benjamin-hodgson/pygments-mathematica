@@ -178,6 +178,23 @@ endOfIndent"""
                   (Name, 'y'), (Punctuation, '}'), (Punctuation, ']'), (Punctuation, ';'),
                   (Whitespace, '\n'), (Name, 'endOfIndent')]
         self.run(code, wanted)
+    
+    def test_patten_match(self):
+        code = "{{a,b},{c,d}} = f[{{w,x},{y,z}}];"
+        wanted = [(Punctuation, '{'), (Punctuation, '{'),
+                  (Name.Function, 'a'), (Punctuation, ','), (Name.Function, 'b'),
+                  (Punctuation, '}'), (Punctuation, ','), (Punctuation, '{'),
+                  (Name.Function, 'c'), (Punctuation, ','), (Name.Function, 'd'),
+                  (Punctuation, '}'), (Punctuation, '}'),
+                  (Whitespace, ' '), (Operator, '='), (Whitespace, ' '),
+                  (Name, 'f'), (Punctuation, '['),
+                  (Punctuation, '{'), (Punctuation, '{'),
+                  (Name.Function, 'w'), (Punctuation, ','), (Name.Function, 'x'),
+                  (Punctuation, '}'), (Punctuation, ','), (Punctuation, '{'),
+                  (Name.Function, 'y'), (Punctuation, ','), (Name.Function, 'z'),
+                  (Punctuation, '}'), (Punctuation, '}'),
+                  (Punctuation, ']'), (Punctuation, ';')]
+        self.run(code, wanted)
 
 
 if __name__ == '__main__':
