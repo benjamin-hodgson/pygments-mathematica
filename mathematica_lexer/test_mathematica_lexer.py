@@ -5,7 +5,7 @@ from pygments.token import *
 import string
 
 
-class BaseMathematicaLexerTest(object):
+class BaseTest(object):
     def run(self, code, wanted):
         assert_equal(wanted + [(Whitespace, '\n')], list(self.lexer.get_tokens(code)))
     
@@ -13,13 +13,15 @@ class BaseMathematicaLexerTest(object):
         self.lexer = MathematicaLexer()
 
 
-class TestText(BaseMathematicaLexerTest):
+class TestWhitespace(BaseTest):
     def test_whitespace(self):
         for tokentype, text in self.lexer.get_tokens(string.whitespace):
             assert_equal(tokentype, Whitespace)
             for c in text:
                 assert c in string.whitespace, repr(c)
-    
+
+
+class TestNames(BaseTest):    
     def test_text(self):
         code = """some normal text"""
         wanted = [(Text, 'some'), (Whitespace, ' '),
@@ -33,7 +35,7 @@ class TestText(BaseMathematicaLexerTest):
         self.run(code, wanted)
 
 
-class TestComments(BaseMathematicaLexerTest):
+class TestComments(BaseTest):
     def test_comment(self):
         code = """normal code (* comment *)"""
         wanted = [(Text, 'normal'), (Whitespace, ' '),
@@ -60,7 +62,7 @@ comment *)"""
         self.run(code, wanted)
 
 
-class TestStrings(BaseMathematicaLexerTest):
+class TestStrings(BaseTest):
     def test_string(self):
         code = '''normal code "string"'''
         wanted = [(Text, 'normal'), (Whitespace, ' '),
@@ -75,7 +77,7 @@ string"'''
         self.run(code, wanted)
 
 
-class TestNumbers(BaseMathematicaLexerTest):
+class TestNumbers(BaseTest):
     def test_integers(self):
         code = "123 -56"
         wanted = [(Number.Integer, '123'), (Whitespace, ' '),
@@ -93,7 +95,7 @@ class TestNumbers(BaseMathematicaLexerTest):
         self.run(code, wanted)
 
 
-class TestSymbols(BaseMathematicaLexerTest):
+class TestSymbols(BaseTest):
     def test_braces(self):
         code = "{}[]()"
         wanted = [(Punctuation, c) for c in code]
