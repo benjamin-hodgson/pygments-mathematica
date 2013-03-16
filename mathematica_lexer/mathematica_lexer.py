@@ -24,7 +24,7 @@ class MathematicaLexer(RegexLexer):
         'symbols': [
             (r'[\+\-/*=^:<>@\?~]', Operator),
             (r'[\[\]\(\){}]', Punctuation),  # various braces
-            (r'[\.,;_]', Punctuation)
+            (r'[\.,;_&]', Punctuation)
         ],
         'comment': [
             (r'[^\*\(\)]+', Comment),
@@ -37,6 +37,7 @@ class MathematicaLexer(RegexLexer):
             (r'^(\s*)([A-Za-z][A-Za-z0-9]*)(\s*)(=)(\s*)(.*?)$',
              bygroups(Whitespace, Name.Function, Whitespace, Operator, Whitespace, using(this))),
             (r'[a-z][A-Za-z0-9]*', Name),  # user-defined names start with lowercase
+            (r'#[0-9]*', Name.Variable)
         ]
     }
 
