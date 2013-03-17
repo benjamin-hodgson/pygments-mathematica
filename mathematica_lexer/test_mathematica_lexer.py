@@ -141,25 +141,26 @@ class TestLHS(BaseTest):
     def test_one_argument(self):
         code = 'oneArgument[x_] := x^2;'
         wanted = [(Name.Function, 'oneArgument'), (Punctuation, '['),
-                  (Name.Variable, 'x'), (Punctuation, '_'), (Punctuation, ']'),
+                  (Name, 'x'), (Punctuation, '_'), (Punctuation, ']'),
                   (Whitespace, ' '), (Operator, ':='), (Whitespace, ' '),
-                  (Name.Variable, 'x'), (Operator, '^'), (Number.Integer, '2'),
+                  (Name, 'x'), (Operator, '^'), (Number.Integer, '2'),
                   (Punctuation, ';')]
         self.run(code, wanted)
     
     def test_multiple_arguments(self):
         code = 'multipleArguments[x_List, y_?NumericQ, z_] := x + y*z/2.0;'
         wanted = [(Name.Function, 'multipleArguments'), (Punctuation, '['),
-                  (Name.Variable, 'x'), (Punctuation, '_'), (Name.Builtin, 'List'),
+                  (Name, 'x'), (Punctuation, '_'), (Name.Builtin, 'List'),
                   (Punctuation, ','), (Whitespace, ' '),
-                  (Name.Variable, 'y'), (Punctuation, '_?'), (Name.Builtin, 'NumericQ'),
+                  (Name, 'y'), (Punctuation, '_'), (Punctuation, '?'),
+                  (Name.Builtin, 'NumericQ'),
                   (Punctuation, ','), (Whitespace, ' '),
-                  (Name.Variable, 'z'), (Punctuation, '_'), (Punctuation, ']'),
+                  (Name, 'z'), (Punctuation, '_'), (Punctuation, ']'),
                   (Whitespace, ' '), (Operator, ':='), (Whitespace, ' '),
-                  (Name.Variable, 'x'), (Whitespace, ' '),
+                  (Name, 'x'), (Whitespace, ' '),
                   (Operator, '+'), (Whitespace, ' '),
-                  (Name.Variable, 'y'), (Operator, '*'),
-                  (Name.Variable, 'z'), (Operator, '/'), (Number.Float, '2.0'),
+                  (Name, 'y'), (Operator, '*'),
+                  (Name, 'z'), (Operator, '/'), (Number.Float, '2.0'),
                   (Punctuation, ';')]
         self.run(code, wanted)
     
@@ -168,12 +169,12 @@ class TestLHS(BaseTest):
   {x, x^2, y}];
 endOfIndent"""
         wanted = [(Name.Function, 'multilineFunction'), (Punctuation, '['),
-                  (Name.Variable, 'x'), (Punctuation, '_'), (Punctuation, ']'),
+                  (Name, 'x'), (Punctuation, '_'), (Punctuation, ']'),
                   (Whitespace, ' '), (Operator, ':='), (Whitespace, ' '),
                   (Name.Builtin, 'BuiltinFunction'), (Punctuation, '['),
-                  (Whitespace, '\n'), (Whitespace, '  '),
-                  (Punctuation, '{'), (Name.Variable, 'x'), (Punctuation, ','),
-                  (Whitespace, ' '), (Name.Variable, 'x'), (Operator, '^'),
+                  (Whitespace, '\n  '),
+                  (Punctuation, '{'), (Name, 'x'), (Punctuation, ','),
+                  (Whitespace, ' '), (Name, 'x'), (Operator, '^'),
                   (Number.Integer, '2'), (Punctuation, ','), (Whitespace, ' '),
                   (Name, 'y'), (Punctuation, '}'), (Punctuation, ']'), (Punctuation, ';'),
                   (Whitespace, '\n'), (Name, 'endOfIndent')]
@@ -189,9 +190,9 @@ endOfIndent"""
                   (Whitespace, ' '), (Operator, '='), (Whitespace, ' '),
                   (Name, 'f'), (Punctuation, '['),
                   (Punctuation, '{'), (Punctuation, '{'),
-                  (Name.Function, 'w'), (Punctuation, ','), (Name.Function, 'x'),
+                  (Name, 'w'), (Punctuation, ','), (Name, 'x'),
                   (Punctuation, '}'), (Punctuation, ','), (Punctuation, '{'),
-                  (Name.Function, 'y'), (Punctuation, ','), (Name.Function, 'z'),
+                  (Name, 'y'), (Punctuation, ','), (Name, 'z'),
                   (Punctuation, '}'), (Punctuation, '}'),
                   (Punctuation, ']'), (Punctuation, ';')]
         self.run(code, wanted)
