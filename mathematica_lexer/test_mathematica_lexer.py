@@ -147,6 +147,20 @@ class TestLHS(BaseTest):
                   (Punctuation, ';')]
         self.run(code, wanted)
     
+        def test_definition_after_code(self):
+            code = """normal code;
+leftHandSide[a_, b_] := a + b;"""
+            wanted = [(Name, 'normal'), (Whitespace, ' '),
+                      (Name, 'code'), (Punctuation, ';'), (Whitespace, '\n'),
+                      (Name.Function, 'leftHandSide'), (Punctuation, '['),
+                      (Name, 'a'), (Punctuation, '_'), (Punctuation, ','),
+                      (Name, 'b'), (Punctuation, '_'), (Punctuation, ']'),
+                      (Whitespace, ' '), (Operator, ':='), (Whitespace, ' '),
+                      (Name, 'a'), (Whitespace, ' '),
+                      (Operator, '+'), (Whitespace, ' '),
+                      (Name, 'b'), (Punctuation, ';')]
+            self.run(code, wanted)
+    
     def test_multiple_arguments(self):
         code = 'multipleArguments[x_List, y_?NumericQ, z_] := x + y*z/2.0;'
         wanted = [(Name.Function, 'multipleArguments'), (Punctuation, '['),
