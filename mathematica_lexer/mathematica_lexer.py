@@ -34,12 +34,14 @@ class MathematicaLexer(RegexLexer):
         ],
         'names': [
             (r'[A-Z][A-Za-z0-9]*', Name.Builtin),  # builtins start with a capital letter
-            (r'^(\s*)([A-Za-z][A-Za-z0-9]*)(\s*)(=)(\s*)(.*?)$',
-             bygroups(Whitespace, Name.Function, Whitespace, Operator, Whitespace, using(this))),
+            (r'^([a-z][A-Za-z0-9]*)(\[?.*?\]?)(\s*)(:?=)(\s*)(.*?)$',
+             bygroups(Name.Function, using(this),
+                      Whitespace, Operator, Whitespace, using(this))),
             (r'[a-z][A-Za-z0-9]*', Name),  # user-defined names start with lowercase
             (r'#[0-9]*', Name.Variable)
         ]
     }
+
 
 if __name__ == '__main__':
     from pygments import highlight
