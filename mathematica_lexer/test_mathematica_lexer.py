@@ -107,12 +107,12 @@ class TestSymbols(BaseTest):
         self.run(code, wanted)
     
     def test_punctuation(self):
-        code = '.,;_'
+        code = '.,;_?'
         wanted = [(Punctuation, c) for c in code]
         self.run(code, wanted)
     
     def test_operators(self):
-        code = '+-*^/:=<>@~?'
+        code = '+-*^/:=<>@~'
         wanted = [(Operator, c) for c in code]
         self.run(code, wanted)
     
@@ -148,12 +148,12 @@ class TestLHS(BaseTest):
         self.run(code, wanted)
     
     def test_multiple_arguments(self):
-        code = 'multipleArguments[x_, y_, z_] := x + y*z/2.0;'
+        code = 'multipleArguments[x_List, y_?NumericQ, z_] := x + y*z/2.0;'
         wanted = [(Name.Function, 'multipleArguments'), (Punctuation, '['),
-                  (Name.Variable, 'x'), (Punctuation, '_'), (Punctuation, ','),
-                  (Whitespace, ' '),
-                  (Name.Variable, 'y'), (Punctuation, '_'), (Punctuation, ','),
-                  (Whitespace, ' '),
+                  (Name.Variable, 'x'), (Punctuation, '_'), (Name.Builtin, 'List'),
+                  (Punctuation, ','), (Whitespace, ' '),
+                  (Name.Variable, 'y'), (Punctuation, '_?'), (Name.Builtin, 'NumericQ'),
+                  (Punctuation, ','), (Whitespace, ' '),
                   (Name.Variable, 'z'), (Punctuation, '_'), (Punctuation, ']'),
                   (Whitespace, ' '), (Operator, ':='), (Whitespace, ' '),
                   (Name.Variable, 'x'), (Whitespace, ' '),
