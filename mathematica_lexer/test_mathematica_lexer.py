@@ -209,6 +209,15 @@ endOfIndent"""
                   (Punctuation, '}'), (Punctuation, '}'),
                   (Punctuation, ']'), (Punctuation, ';')]
         self.run(code, wanted)
+    
+    def test_pattern_match_in_definition(self):
+        code = 'addTwo[{a_}] := a + 2'
+        wanted = [(Name.Function, 'addTwo'), (Punctuation, '['), (Punctuation, '{'),
+                  (Name.Variable, 'a'), (Punctuation, '_'), (Punctuation, '}'),
+                  (Punctuation, ']'), (Whitespace, ' '), (Operator, ':='),
+                  (Whitespace, ' '), (Name.Variable, 'a'), (Whitespace, ' '),
+                  (Operator, '+'), (Whitespace, ' '), (Number.Integer, '2')]
+        self.run(code, wanted)
 
 
 if __name__ == '__main__':
