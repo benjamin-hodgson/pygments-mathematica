@@ -149,7 +149,8 @@ class TestLHS(BaseTest):
     
         def test_definition_after_code(self):
             code = """normal code;
-leftHandSide[a_, b_] := a + b;"""
+leftHandSide[a_, b_] := a + b;
+more code"""
             wanted = [(Name, 'normal'), (Whitespace, ' '),
                       (Name, 'code'), (Punctuation, ';'), (Whitespace, '\n'),
                       (Name.Function, 'leftHandSide'), (Punctuation, '['),
@@ -158,7 +159,8 @@ leftHandSide[a_, b_] := a + b;"""
                       (Whitespace, ' '), (Operator, ':='), (Whitespace, ' '),
                       (Name.Variable, 'a'), (Whitespace, ' '),
                       (Operator, '+'), (Whitespace, ' '),
-                      (Name.Variable, 'b'), (Punctuation, ';')]
+                      (Name.Variable, 'b'), (Punctuation, ';'), (Whitespace, '\n'),
+                      (Name, 'more'), (Whitespace, ' '), (Name, 'code')]
             self.run(code, wanted)
     
     def test_multiple_arguments(self):
