@@ -141,9 +141,9 @@ class TestLHS(BaseTest):
     def test_one_argument(self):
         code = 'oneArgument[x_] := x^2;'
         wanted = [(Name.Function, 'oneArgument'), (Punctuation, '['),
-                  (Name, 'x'), (Punctuation, '_'), (Punctuation, ']'),
+                  (Name.Variable, 'x'), (Punctuation, '_'), (Punctuation, ']'),
                   (Whitespace, ' '), (Operator, ':='), (Whitespace, ' '),
-                  (Name, 'x'), (Operator, '^'), (Number.Integer, '2'),
+                  (Name.Variable, 'x'), (Operator, '^'), (Number.Integer, '2'),
                   (Punctuation, ';')]
         self.run(code, wanted)
     
@@ -153,28 +153,28 @@ leftHandSide[a_, b_] := a + b;"""
             wanted = [(Name, 'normal'), (Whitespace, ' '),
                       (Name, 'code'), (Punctuation, ';'), (Whitespace, '\n'),
                       (Name.Function, 'leftHandSide'), (Punctuation, '['),
-                      (Name, 'a'), (Punctuation, '_'), (Punctuation, ','),
-                      (Name, 'b'), (Punctuation, '_'), (Punctuation, ']'),
+                      (Name.Variable, 'a'), (Punctuation, '_'), (Punctuation, ','),
+                      (Name.Variable, 'b'), (Punctuation, '_'), (Punctuation, ']'),
                       (Whitespace, ' '), (Operator, ':='), (Whitespace, ' '),
-                      (Name, 'a'), (Whitespace, ' '),
+                      (Name.Variable, 'a'), (Whitespace, ' '),
                       (Operator, '+'), (Whitespace, ' '),
-                      (Name, 'b'), (Punctuation, ';')]
+                      (Name.Variable, 'b'), (Punctuation, ';')]
             self.run(code, wanted)
     
     def test_multiple_arguments(self):
         code = 'multipleArguments[x_List, y_?NumericQ, z_] := x + y*z/2.0;'
         wanted = [(Name.Function, 'multipleArguments'), (Punctuation, '['),
-                  (Name, 'x'), (Punctuation, '_'), (Name.Builtin, 'List'),
+                  (Name.Variable, 'x'), (Punctuation, '_'), (Name.Builtin, 'List'),
                   (Punctuation, ','), (Whitespace, ' '),
-                  (Name, 'y'), (Punctuation, '_'), (Punctuation, '?'),
+                  (Name.Variable, 'y'), (Punctuation, '_'), (Punctuation, '?'),
                   (Name.Builtin, 'NumericQ'),
                   (Punctuation, ','), (Whitespace, ' '),
-                  (Name, 'z'), (Punctuation, '_'), (Punctuation, ']'),
+                  (Name.Variable, 'z'), (Punctuation, '_'), (Punctuation, ']'),
                   (Whitespace, ' '), (Operator, ':='), (Whitespace, ' '),
-                  (Name, 'x'), (Whitespace, ' '),
+                  (Name.Variable, 'x'), (Whitespace, ' '),
                   (Operator, '+'), (Whitespace, ' '),
-                  (Name, 'y'), (Operator, '*'),
-                  (Name, 'z'), (Operator, '/'), (Number.Float, '2.0'),
+                  (Name.Variable, 'y'), (Operator, '*'),
+                  (Name.Variable, 'z'), (Operator, '/'), (Number.Float, '2.0'),
                   (Punctuation, ';')]
         self.run(code, wanted)
     
@@ -183,12 +183,12 @@ leftHandSide[a_, b_] := a + b;"""
   {x, x^2, y}];
 endOfIndent"""
         wanted = [(Name.Function, 'multilineFunction'), (Punctuation, '['),
-                  (Name, 'x'), (Punctuation, '_'), (Punctuation, ']'),
+                  (Name.Variable, 'x'), (Punctuation, '_'), (Punctuation, ']'),
                   (Whitespace, ' '), (Operator, ':='), (Whitespace, ' '),
                   (Name.Builtin, 'BuiltinFunction'), (Punctuation, '['),
                   (Whitespace, '\n  '),
-                  (Punctuation, '{'), (Name, 'x'), (Punctuation, ','),
-                  (Whitespace, ' '), (Name, 'x'), (Operator, '^'),
+                  (Punctuation, '{'), (Name.Variable, 'x'), (Punctuation, ','),
+                  (Whitespace, ' '), (Name.Variable, 'x'), (Operator, '^'),
                   (Number.Integer, '2'), (Punctuation, ','), (Whitespace, ' '),
                   (Name, 'y'), (Punctuation, '}'), (Punctuation, ']'), (Punctuation, ';'),
                   (Whitespace, '\n'), (Name, 'endOfIndent')]
