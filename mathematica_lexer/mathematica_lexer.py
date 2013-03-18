@@ -1,6 +1,7 @@
+import re
+from string import whitespace
 from pygments.lexer import RegexLexer, bygroups, include, using, this
 from pygments.token import *
-import re
 
 class MathematicaLexer(RegexLexer):
     name = 'Mathematica'
@@ -21,8 +22,9 @@ class MathematicaLexer(RegexLexer):
             args = [arg + ',' for arg in match.group(2)[1:-1].split(',')]
             args[-1] = args[-1][:-1]  # drop the trailing comma
             for arg in args:
-                argmatch = re.match(r'(\s*)([a-z][A-Za-z0-9]*)(_\??)([A-Za-z0-9]*)(,?)', arg)
-                for t, v in zip((Whitespace, Name.Variable, Punctuation, None, Punctuation),
+                argmatch = re.match(r'(\s*)({?)([a-z][A-Za-z0-9]*)(_\??)([A-Za-z0-9]*)(}?)(,?)', arg)
+                for t, v in zip((Whitespace, Punctuation, Name.Variable,
+                                 Punctuation, None, Punctuation, Punctuation),
                                 argmatch.groups()):
                     if v:
                         if t is None:
@@ -32,7 +34,7 @@ class MathematicaLexer(RegexLexer):
             
             yield match.end(2) - 1, Punctuation, ']'
             
-            args = [arg.partition('_')[0].strip() for arg in args]
+            args = [arg.partition('_')[0].strip('_[]{}?' + whitespace) for arg in args]
             # now args is plain arguments, eg ['x', 'y'] not ['x_,', ' y_List']
         
         if match.group(3):
@@ -44,7 +46,7 @@ class MathematicaLexer(RegexLexer):
             yield match.start(5), Whitespace, match.group(5)
         
         posn = match.start(6)
-        for i, t, v in lexer.get_tokens_unprocessed(match.group()[posn:]):
+        for i, t, v in lexer.get_tokens_unprocessed(match.group(6)):
             if v in args:
                 yield i + posn, Name.Variable, v
             else:
