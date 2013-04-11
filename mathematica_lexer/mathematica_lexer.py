@@ -74,20 +74,3 @@ class MathematicaLexer(RegexLexer):
             (r'#[0-9]*', Name.Variable)
         ]
     }
-
-
-if __name__ == '__main__':
-    from pygments import highlight
-    from pygments.formatters import LatexFormatter
-    test_code = """
-normal code; (* a comment *)
-(* comment (* (nested) *) *)
-BuiltInFunctionCall[argument, {list,argument,-10.01e+12}];
-assignment = {var, 2, "string"};
-
-(* multiline comment
-ContainingAKeyword,
-assignment = {1,3,"hello"},
-aFunctionDefiniton[a_,b_] := a+b *)
-"""
-    print(highlight(test_code, MathematicaLexer(), LatexFormatter()))
