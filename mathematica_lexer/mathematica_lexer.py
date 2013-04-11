@@ -40,7 +40,6 @@ class MathematicaLexer(RegexLexer):
             yield tup
         
     def LHS(lexer, match, ctx=None):
-        print('entering LHS')
         s = match.start()
         for i, t, v in lexer.get_tokens_unprocessed(match.group()):
             new_t = Name.Function if t is Name else t
