@@ -107,12 +107,12 @@ class TestSymbols(BaseTest):
         self.run(code, wanted)
     
     def test_punctuation(self):
-        code = '.,;_?'
+        code = ',;_?'
         wanted = [(Punctuation, c) for c in code]
         self.run(code, wanted)
     
     def test_operators(self):
-        code = '+-*^/:=<>@~'
+        code = '+-*^/:=<>@~.'
         wanted = [(Operator, c) for c in code]
         self.run(code, wanted)
     
