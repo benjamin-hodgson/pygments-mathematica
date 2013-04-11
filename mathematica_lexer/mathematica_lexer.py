@@ -39,6 +39,14 @@ class MathematicaLexer(RegexLexer):
         for tup in lexer.get_tokens_unprocessed(match.group(6)):
             yield tup
         
+    def LHS(lexer, match, ctx=None):
+        print('entering LHS')
+        s = match.start()
+        for i, t, v in lexer.get_tokens_unprocessed(match.group()):
+            new_t = Name.Function if t is Name else t
+            yield i + s, new_t, v
+        if ctx:
+            ctx.pos = match.end()
     
     tokens = {
         'root': [
@@ -47,8 +55,8 @@ class MathematicaLexer(RegexLexer):
             (r'(?s)".*?"', String),
             (r'\\\[\w*?\]', Error),
             include('numbers'),
-            include('symbols'),
-            include('names')
+            include('names'),
+            include('symbols')
         ],
         'numbers': [
             (r'[\+\-]?[0-9]+\.[0-9]*[eE]?[\+\-]?[0-9]*', Number.Float),
@@ -67,8 +75,8 @@ class MathematicaLexer(RegexLexer):
         ],
         'names': [
             (r'[A-Z][A-Za-z0-9]*', Name.Builtin),  # builtins start with a capital letter
-            (r'^([A-Za-z0-9]+)(\[?.*?\]?)(\s*)(:?=)(\s*)(.*?)$',
-             bygroups(Name.Function, using(this), Whitespace, Operator, Whitespace,
+            (r'^([A-Za-z0-9,\s{}]+)(\[?.*?\]?)(\s*)(:?=)(\s*)(.*?)$',
+             bygroups(LHS, using(this), Whitespace, Operator, Whitespace,
                       using(this))),
             (r'[a-z][A-Za-z0-9]*', Name),  # user-defined names start with lowercase
             (r'#[0-9]*', Name.Variable)
