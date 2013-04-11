@@ -195,21 +195,27 @@ endOfIndent"""
         self.run(code, wanted)
     
     def test_patten_match(self):
-        code = "{{a,b},{c,d}} = f[{{w,x},{y,z}}];"
-        wanted = [(Punctuation, '{'), (Punctuation, '{'),
-                  (Name.Function, 'a'), (Punctuation, ','), (Name.Function, 'b'),
-                  (Punctuation, '}'), (Punctuation, ','), (Punctuation, '{'),
-                  (Name.Function, 'c'), (Punctuation, ','), (Name.Function, 'd'),
-                  (Punctuation, '}'), (Punctuation, '}'),
-                  (Whitespace, ' '), (Operator, '='), (Whitespace, ' '),
-                  (Name, 'f'), (Punctuation, '['),
-                  (Punctuation, '{'), (Punctuation, '{'),
-                  (Name, 'w'), (Punctuation, ','), (Name, 'x'),
-                  (Punctuation, '}'), (Punctuation, ','), (Punctuation, '{'),
-                  (Name, 'y'), (Punctuation, ','), (Name, 'z'),
-                  (Punctuation, '}'), (Punctuation, '}'),
-                  (Punctuation, ']'), (Punctuation, ';')]
-        self.run(code, wanted)
+        code1 = "{a} = {b}"
+        wanted1 = [(Punctuation, '{'),(Name.Function, 'a'),(Punctuation, '}'),
+                   (Whitespace, ' '), (Operator, '='), (Whitespace, ' '),
+                   (Punctuation, '{'),(Name, 'b'),(Punctuation, '}')]
+        self.run(code1, wanted1)
+    
+        code2 = "{{a,b},{c,d}} = f[{{w,x},{y,z}}];"
+        wanted2 = [(Punctuation, '{'), (Punctuation, '{'),
+                   (Name.Function, 'a'), (Punctuation, ','), (Name.Function, 'b'),
+                   (Punctuation, '}'), (Punctuation, ','), (Punctuation, '{'),
+                   (Name.Function, 'c'), (Punctuation, ','), (Name.Function, 'd'),
+                   (Punctuation, '}'), (Punctuation, '}'),
+                   (Whitespace, ' '), (Operator, '='), (Whitespace, ' '),
+                   (Name, 'f'), (Punctuation, '['),
+                   (Punctuation, '{'), (Punctuation, '{'),
+                   (Name, 'w'), (Punctuation, ','), (Name, 'x'),
+                   (Punctuation, '}'), (Punctuation, ','), (Punctuation, '{'),
+                   (Name, 'y'), (Punctuation, ','), (Name, 'z'),
+                   (Punctuation, '}'), (Punctuation, '}'),
+                   (Punctuation, ']'), (Punctuation, ';')]
+        self.run(code2, wanted2)
 
 
 if __name__ == '__main__':
