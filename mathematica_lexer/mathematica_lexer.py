@@ -77,7 +77,7 @@ class MathematicaLexer(RegexLexer):
             (r'[\+\-]?[0-9]+', Number.Integer)
         ],
         'symbols': [
-            (r'[\+\-/*=^:<>@~.]', Operator),
+            (r'[!`\$\+\-/*=^:<>@~.]', Operator),
             (r'[\[\]\(\){}]', Punctuation),  # various braces
             (r'[\,;_&\?]', Punctuation)
         ],
